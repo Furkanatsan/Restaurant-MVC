@@ -1,0 +1,61 @@
+﻿@model List<Kategori>
+
+@{
+    ViewData["Title"] = "Kategoriler";
+}
+<section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/bg_5.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-5">
+                <h1 class="mb-2 bread">Kategoriler</h1>
+                <p class="breadcrumbs"><span class="mr-2"></span><span><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fa fa-chevron-right"></i></a></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+<h3>Kategori Listesi</h3>
+<br />
+<a asp-controller="Kategori" asp-action="Yeni" class="btn btn-primary">Yeni Kategori Ekle</a>
+<br />
+<br />
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Kategori Adı</th>
+            <th>Düzenle</th>
+            <th>Sil</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in @Model)
+            {
+                <tr>
+                    <td>@item.KategoriId</td>
+                    <td>@item.KategoriAdi</td>
+                    <td>
+                        <a class="btn btn-info" asp-controller="Kategori" asp-action="Duzenle" asp-route-KategoriId="@item.KategoriId">Düzenle</a>
+                    </td>
+                    <td>
+                        <script>
+                            function SilTiklandi(id) {
+                                if (confirm("Emin misin?")) {
+                                    $.ajax({
+                                        method: "post",
+                                        url: '@Url.Action("Sil", "Kategori")',
+                                        data: { KategoriId: id },
+                                        success: function () {
+                                            window.location.href = "/Kategori";
+                                        }});}};
+                        </script>
+                        <a class="btn btn-info text-white" onclick=SilTiklandi(@item.KategoriId)>Sil</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

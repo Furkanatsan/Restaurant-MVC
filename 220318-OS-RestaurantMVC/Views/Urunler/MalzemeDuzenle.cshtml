@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Malzeme Düzenle";
+}
+<section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/bg_5.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-5">
+                <h1 class="mb-2 bread">Ürünler</h1>
+                <p class="breadcrumbs"><span class="mr-2"></span><span><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fa fa-chevron-right"></i></a></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="m-5">
+    <form asp-action="MalzemeDuzenle" method="post">
+        <input type="number" name="urunId"
+               value="@((int)Model)" hidden />
+        <div class="form-group">
+            <label for="ids">Malzemeler</label>
+            <select size="10" class="custom-select custom-select-lg" name="ids" id="ids"
+                    asp-items="ViewBag.Malzemeler" multiple></select>
+        </div>
+        <button class="btn btn-success">Güncelle</button>
+        <a class="btn btn-info" asp-action="Index" asp-controller="Urunler">İptal</a>
+    </form>
+</div>
+

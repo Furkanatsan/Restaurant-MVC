@@ -1,0 +1,77 @@
+﻿@model List<Urun>
+@{
+    ViewData["Title"] = "Urunler";
+}
+<section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/bg_5.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-5">
+                <h1 class="mb-2 bread">Ürünler</h1>
+                <p class="breadcrumbs"><span class="mr-2"></span><span><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home <i class="fa fa-chevron-right"></i></a></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid mt-2">
+    <h1 class="text-center">Ürünler</h1>
+    @if (TempData["mesaj"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["mesaj"]
+        </div>
+    }
+
+    <a class="btn btn-success mb-2" asp-controller="Urunler" asp-action="Ekle">Ürün Ekle</a>
+    <table class="table table-striped  text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Ürün Adı</th>
+                <th>Ürün Tanımı</th>
+                <th>Ürün Fiyatı</th>
+                <th>Ürün Resmi</th>
+                <th>Ürün Kategorisi</th>
+                <th>Ürün Malzemeleri</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UrunId</td>
+                        <td>@item.UrunAdi</td>
+                        <td>
+                            @{
+                                if (item.UrunTanimi.Length > 25)
+                                {
+                                    <text>@item.UrunTanimi.Substring(0, 25)</text>
+                                }
+                            }
+                        </td>
+                        <td>@item.UrunFiyat</td>
+                        <td>
+                            <img class="img-fluid" width="250" height="250" src="~/images/uploads/@item.UrunResimURL" alt="@item.UrunAdi" />
+                        </td>
+                        <td>@item.Kategori.KategoriAdi</td>
+                        <td>
+                            @string.Join(",", item.UrunlerMalzemeler
+                           .Select(x => x.Malzeme.MalzemeAdi))
+                        </td>
+                        <td>
+                            <a asp-action="MalzemeDuzenle"
+                               asp-controller="Urunler"
+                               asp-route-urunId="@item.UrunId" class="btn btn-warning mb-1">Malzeme Düzenle</a>
+                            <a class="btn btn-info mb-1" asp-action="Duzenle" asp-controller="Urunler" asp-route-id="@item.UrunId">Düzenle</a>
+                            <a class="btn btn-danger mb-1" asp-action="Sil" asp-controller="Urunler" asp-route-id="@item.UrunId">Sil</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
